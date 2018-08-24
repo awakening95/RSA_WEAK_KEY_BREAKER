@@ -1,6 +1,22 @@
 from sympy import *
 
 
+class ConFraction:
+    def con_fraction(self, n, d):  # get continued fraction of n/d
+        e = []
+        q = n // d
+        r = n % d
+        e.append(q)
+
+        while r != 0:
+            n, d = d, r
+            q = n // d
+            r = n % d
+            e.append(q)
+
+        return e
+
+
 class WienerAttack:
     def convergents(self, e):
         n = []
@@ -20,5 +36,3 @@ class WienerAttack:
             n.append(ni)
             d.append(di)
             yield (ni, di)
-
-

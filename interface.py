@@ -4,22 +4,6 @@ import hastad_broadcast_attack
 import near_prime_factorization
 import wiener_attack
 
-
-def con_fraction(n, d):  # get continued fraction of n/d
-    e = []
-    q = n // d
-    r = n % d
-    e.append(q)
-
-    while r != 0:
-        n, d = d, r
-        q = n // d
-        r = n % d
-        e.append(q)
-
-    return e
-
-
 while True:
     print("┌──────────────────────────────────────────────────┐")
     print("│                                     RSA WEAK KEY BREAKER                                     │")
@@ -80,7 +64,6 @@ while True:
             list_cipher_text.append(cipher_text)
 
         x = hastad_broadcast_attack.HastadBroadcastAttack()
-
         c = x.crt_list(list_n, list_cipher_text)
 
         text = int(round(c ** (1 / e)))
@@ -91,11 +74,11 @@ while True:
         n = int(input("Input N:"))
         e = int(input("Input e:"))
 
-        cf_expansion = con_fraction(e, n)
+        x = wiener_attack.ConFraction()
+        cf_expansion = x.con_fraction(e, n)
 
-        x = wiener_attack.WienerAttack()
-
-        conv = x.convergents(cf_expansion)
+        y = wiener_attack.WienerAttack()
+        conv = y.convergents(cf_expansion)
 
         for pk, pd in conv:
             if pk == 0:
